@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotations</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+    :root {
+    --bg-color-light: #f0f0f0;
+    --bg-color-dark: #333;
+    --text-color-light: #333;
+    --text-color-dark: #f0f0f0;
+    --primary-color: #ff6f61;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    background-color: var(--primary-color);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+#nav-menu li {
+    margin: 0 10px;
+}
+
+#nav-menu a {
+    text-decoration: none;
+    color: white;
+}
+
+.theme-switch {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.theme-switch label {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.form-section {
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+}
+
+form textarea, form input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+
+.dark-theme {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+.dark-theme header {
+    background-color: darken(var(--primary-color), 20%);
+}
+
+.dark-theme #nav-menu a {
+    color: var(--text-color-dark);
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    themeToggle.addEventListener('change', () => {
+        body.classList.toggle('dark-theme');
+    });
+
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+});
+
+</script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-toggle" id="nav-toggle">☰</div>
+            <ul id="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Quotes</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle">🌙</label>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="form-section">
+            <h1>Submit a Quote</h1>
+            <form id="quote-form">
+                <label for="quote">Quote:</label>
+                <textarea id="quote" name="quote" required></textarea>
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" required>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
