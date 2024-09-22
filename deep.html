@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <meta name="theme-color" content="#ff9a9e">
+    <script>
+        // Function to update the theme-color meta tag
+        function updateThemeColor(color) {
+            const metaThemeColor = document.querySelector("meta[name=theme-color]");
+            if (metaThemeColor) {
+                metaThemeColor.setAttribute("content", color);
+            }
+        }
+
+        // Update theme color when the background changes
+        setInterval(() => {
+            const bodyStyles = window.getComputedStyle(document.body);
+            const bgColor = bodyStyles.getPropertyValue('background-color');
+            updateThemeColor(bgColor);
+        }, 1000); // Check every second
+    </script>
+
+    <style>
+        :root {
+            --glass-color: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+            --glass-blur: 10px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffecd2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background: var(--glass-color);
+            backdrop-filter: blur(var(--glass-blur));
+            border-bottom: var(--glass-border);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            margin: 0 1rem;
+        }
+
+        .navbar a {
+            color: rgb(204, 147, 147);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffd700;
+        }
+
+        /* .theme-switch {
+            background: var(--glass-color);
+            backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            border-radius: 5px;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+        } */
+
+        .container {
+            background: var(--glass-color);
+            backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 80px 20px 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+
+        .container.expanded {
+            padding-bottom: 40px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: var(--glass-border);
+            border-radius: 5px;
+            color: white;
+        }
+
+        .content-display {
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
+
+        .content-display.active {
+            height: 400px;
+        }
+
+        img, video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .fullscreen-btn {
+            background: var(--glass-color);
+            border: var(--glass-border);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background: var(--glass-color);
+            backdrop-filter: blur(var(--glass-blur));
+            border-top: var(--glass-border);
+            padding: auto;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <select id="themeSelect" class="theme-switch">
+            <option value="default">Default</option>
+            <option value="dark">Dark</option>
+            <option value="nature">Nature</option>
+            <option value="ocean">Ocean</option>
+            <option value="sunset">Sunset</option>
+            <option value="neon">Neon</option>
+            <option value="pastel">Pastel</option>
+            <option value="cyberpunk">Cyberpunk</option>
+            <option value="autumn">Autumn</option>
+            <option value="winter">Winter</option>
+            <option value="spring">Spring</option>
+        </select>
+    </nav>
+
+    <div class="container" id="pdfContainer">
+        <h2>PDF Reader</h2>
+        <select id="pdfSelect">
+            <option value="">Select a PDF</option>
+            <option value="CustomBalanceCertScreen20-09-2024.pdf">Sample PDF 1</option>
+            <option value="https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf">Sample PDF 2</option>
+        </select>
+        <div class="content-display" id="pdfDisplay">
+            <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+        </div>
+        <button class="fullscreen-btn" id="fullscreenBtn">Fullscreen</button>
+    </div>
+
+    <div class="container" id="imageContainer">
+        <h2>Image Gallery</h2>
+        <select id="imageSelect">
+            <option value="">Select an image</option>
+            <option value="https://picsum.photos/id/1015/800/600">Mountain Lake</option>
+            <option value="https://picsum.photos/id/1018/800/600">Foggy Forest</option>
+            <option value="https://picsum.photos/id/1019/800/600">Sunset</option>
+        </select>
+        <div class="content-display" id="imageDisplay"></div>
+    </div>
+
+    <div class="container" id="audioContainer">
+        <h2>Audio Player</h2>
+        <select id="audioSelect">
+            <option value="">Select an audio file</option>
+            <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">Audio 1</option>
+            <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">Audio 2</option>
+        </select>
+        <div class="content-display" id="audioDisplay"></div>
+    </div>
+
+    <div class="container" id="videoContainer">
+        <h2>Video Player</h2>
+        <select id="videoSelect">
+            <option value="">Select a video</option>
+            <option value="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4">Big Buck Bunny</option>
+            <option value="https://sample-videos.com/video123/mp4/720/jellyfish-25-mbps-hd-hevc.mp4">Jellyfish</option>
+        </select>
+        <div class="content-display" id="videoDisplay"></div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2023 Modern Glassmorphism Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme switching
+        const themeSelect = document.getElementById('themeSelect');
+        const root = document.documentElement;
+
+        const themes = {
+            default: { background: 'linear-gradient(45deg, #ff9a9e, #fad0c4, #ffecd2)', glassColor: 'rgba(255, 255, 255, 0.1)' },
+            dark: { background: 'linear-gradient(45deg, #2c3e50, #3498db, #2980b9)', glassColor: 'rgba(0, 0, 0, 0.1)' },
+            nature: { background: 'linear-gradient(45deg, #76b852, #8DC26F)', glassColor: 'rgba(255, 255, 255, 0.1)' },
+            ocean: { background: 'linear-gradient(45deg, #4CA1AF, #2C3E50)', glassColor: 'rgba(255, 255, 255, 0.1)' },
+            sunset: { background: 'linear-gradient(45deg, #f85032, #e73827)', glassColor: 'rgba(255, 255, 255, 0.1)' },
+            neon: { background: 'linear-gradient(45deg, #8E2DE2, #4A00E0)', glassColor: 'rgba(255, 255, 255, 0.2)' },
+            pastel: { background: 'linear-gradient(45deg, #FBB195, #F67280, #C06C84)', glassColor: 'rgba(255, 255, 255, 0.15)' },
+            cyberpunk: { background: 'linear-gradient(45deg, #FF00FF, #00FFFF)', glassColor: 'rgba(0, 0, 0, 0.2)' },
+            autumn: { background: 'linear-gradient(45deg, #DAA520, #D2691E, #8B4513)', glassColor: 'rgba(255, 255, 255, 0.1)' },
+            winter: { background: 'linear-gradient(45deg, #A1FFCE, #FAFFD1)', glassColor: 'rgba(0, 0, 0, 0.1)' },
+            spring: { background: 'linear-gradient(45deg, #FFC0CB, #FF69B4, #FFB6C1)', glassColor: 'rgba(255, 255, 255, 0.15)' }
+        };
+
+        themeSelect.addEventListener('change', (e) => {
+            const selectedTheme = themes[e.target.value];
+            document.body.style.backgroundImage = selectedTheme.background;
+            root.style.setProperty('--glass-color', selectedTheme.glassColor);
+        });
+
+        // PDF functionality
+        const pdfSelect = document.getElementById('pdfSelect');
+        const pdfDisplay = document.getElementById('pdfDisplay');
+        const pdfViewer = document.getElementById('pdf-viewer');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        pdfSelect.addEventListener('change', (e) => {
+            const selectedPDF = e.target.value;
+            if (selectedPDF) {
+                pdfViewer.src = selectedPDF;
+                pdfDisplay.classList.add('active');
+                document.getElementById('pdfContainer').classList.add('expanded');
+            } else {
+                pdfViewer.src = '';
+                pdfDisplay.classList.remove('active');
+                document.getElementById('pdfContainer').classList.remove('expanded');
+            }
+        });
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (pdfViewer.requestFullscreen) {
+                pdfViewer.requestFullscreen();
+            } else if (pdfViewer.mozRequestFullScreen) { // Firefox
+                pdfViewer.mozRequestFullScreen();
+            } else if (pdfViewer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                pdfViewer.webkitRequestFullscreen();
+            } else if (pdfViewer.msRequestFullscreen) { // IE/Edge
+                pdfViewer.msRequestFullscreen();
+            }
+        });
+
+        // Image functionality
+        const imageSelect = document.getElementById('imageSelect');
+        const imageDisplay = document.getElementById('imageDisplay');
+
+        imageSelect.addEventListener('change', (e) => {
+            const selectedImage = e.target.value;
+            if (selectedImage) {
+                imageDisplay.innerHTML = `<img src="${selectedImage}" alt="Selected Image">`;
+                imageDisplay.classList.add('active');
+                document.getElementById('imageContainer').classList.add('expanded');
+            } else {
+                imageDisplay.innerHTML = '';
+                imageDisplay.classList.remove('active');
+                document.getElementById('imageContainer').classList.remove('expanded');
+            }
+        });
+
+        // Audio functionality
+        const audioSelect = document.getElementById('audioSelect');
+        const audioDisplay = document.getElementById('audioDisplay');
+
+        audioSelect.addEventListener('change', (e) => {
+            const selectedAudio = e.target.value;
+            if (selectedAudio) {
+                audioDisplay.innerHTML = `<audio controls><source src="${selectedAudio}" type="audio/mpeg"></audio>`;
+                audioDisplay.classList.add('active');
+                document.getElementById('audioContainer').classList.add('expanded');
+            } else {
+                audioDisplay.innerHTML = '';
+                audioDisplay.classList.remove('active');
+                document.getElementById('audioContainer').classList.remove('expanded');
+            }
+        });
+
+        // Video functionality
+        const videoSelect = document.getElementById('videoSelect');
+        const videoDisplay = document.getElementById('videoDisplay');
+
+        videoSelect.addEventListener('change', (e) => {
+            const selectedVideo = e.target.value;
+            if (selectedVideo) {
+                videoDisplay.innerHTML = `<video controls><source src="${selectedVideo}" type="video/mp4"></video>`;
+                videoDisplay.classList.add('active');
+                document.getElementById('videoContainer').classList.add('expanded');
+            } else {
+                videoDisplay.innerHTML = '';
+                videoDisplay.classList.remove('active');
+                document.getElementById('videoContainer').classList.remove('expanded');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Block right click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</body>
+</html>
+
+
+
