@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Glassmorphism Website</title>
+    <meta name="theme-color" content="#ff9a9e">
+    <style>
+        :root {
+            --glass-color: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+            --glass-radius: 15px;
+            --glass-blur: 10px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .glassmorphism {
+            background: var(--glass-color);
+            backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            border-radius: var(--glass-radius);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .theme-switch {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        main {
+            padding: 80px 20px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            margin-bottom: 30px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: var(--glass-radius);
+            border: var(--glass-border);
+            background: var(--glass-color);
+            color: white;
+        }
+
+        .pdf-container, .image-container, .audio-container, .video-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .fullscreen-btn {
+            background: var(--glass-color);
+            border: var(--glass-border);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--glass-radius);
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--glass-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header class="glassmorphism">
+        <div class="logo">Welcome</div>
+        <button class="theme-switch" id="themeSwitch">🌓</button>
+    </header>
+
+    <main>
+        <div class="container glassmorphism">
+            <h2>PDF Viewer</h2>
+            <select id="pdfSelect">
+                <option value="">Select a PDF</option>
+                <option value="Mid Semester Datesheet September 2024.pdf">Mid Semester Datesheet September 2024</option>
+                <option value="dummy2.pdf">Dummy PDF 2</option>
+            </select>
+            <div class="pdf-container" id="pdfContainer">
+                <iframe id="pdfViewer" width="100%" height="500px"></iframe>
+                <button class="fullscreen-btn" id="fullscreenBtn">Fullscreen</button>
+            </div>
+        </div>
+
+        <div class="container glassmorphism">
+            <h2>Image Viewer</h2>
+            <select id="imageSelect">
+                <option value="">Select an Image</option>
+                <option value="image1.jpg">Image 1</option>
+                <option value="image2.jpg">Image 2</option>
+            </select>
+            <div class="image-container" id="imageContainer">
+                <img id="selectedImage" src="" alt="Selected Image" style="max-width: 100%;">
+            </div>
+        </div>
+
+        <div class="container glassmorphism">
+            <h2>Audio Player</h2>
+            <select id="audioSelect">
+                <option value="">Select an Audio</option>
+                <option value="audio1.mp3">Audio 1</option>
+                <option value="audio2.mp3">Audio 2</option>
+            </select>
+            <div class="audio-container" id="audioContainer">
+                <audio id="audioPlayer" controls style="width: 100%;">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+
+        <div class="container glassmorphism">
+            <h2>Video Player</h2>
+            <select id="videoSelect">
+                <option value="">Select a Video</option>
+                <option value="video1.mp4">Video 1</option>
+                <option value="video2.mp4">Video 2</option>
+            </select>
+            <div class="video-container" id="videoContainer">
+                <video id="videoPlayer" controls style="width: 100%;">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </main>
+
+    <footer class="glassmorphism">
+        <p>&copy; 2023 Deependra. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme switching
+        const themes = [
+            { primary: '#ee7752', secondary: '#e73c7e', tertiary: '#23a6d5', quaternary: '#23d5ab' },
+            { primary: '#3498db', secondary: '#2ecc71', tertiary: '#e74c3c', quaternary: '#f39c12' },
+            { primary: '#9b59b6', secondary: '#34495e', tertiary: '#1abc9c', quaternary: '#e67e22' },
+            { primary: '#2c3e50', secondary: '#27ae60', tertiary: '#c0392b', quaternary: '#f1c40f' },
+            { primary: '#16a085', secondary: '#2980b9', tertiary: '#8e44ad', quaternary: '#d35400' },
+            { primary: '#2980b9', secondary: '#8e44ad', tertiary: '#16a085', quaternary: '#f39c12' },
+            { primary: '#27ae60', secondary: '#3498db', tertiary: '#e74c3c', quaternary: '#f1c40f' },
+            { primary: '#c0392b', secondary: '#2c3e50', tertiary: '#1abc9c', quaternary: '#f39c12' },
+            { primary: '#8e44ad', secondary: '#16a085', tertiary: '#2980b9', quaternary: '#e67e22' },
+            { primary: '#d35400', secondary: '#2ecc71', tertiary: '#3498db', quaternary: '#9b59b6' }
+        ];
+
+        let currentTheme = 0;
+
+        document.getElementById('themeSwitch').addEventListener('click', () => {
+            currentTheme = (currentTheme + 1) % themes.length;
+            const theme = themes[currentTheme];
+            document.body.style.background = `linear-gradient(-45deg, ${theme.primary}, ${theme.secondary}, ${theme.tertiary}, ${theme.quaternary})`;
+        });
+
+        // PDF Viewer
+        document.getElementById('pdfSelect').addEventListener('change', (e) => {
+            const pdfContainer = document.getElementById('pdfContainer');
+            const pdfViewer = document.getElementById('pdfViewer');
+            if (e.target.value) {
+                pdfContainer.style.display = 'block';
+                pdfViewer.src = `https://docs.google.com/gview?url=${e.target.value}&embedded=true`;
+            } else {
+                pdfContainer.style.display = 'none';
+            }
+        });
+
+        document.getElementById('fullscreenBtn').addEventListener('click', () => {
+            const pdfViewer = document.getElementById('pdfViewer');
+            if (pdfViewer.requestFullscreen) {
+                pdfViewer.requestFullscreen();
+            } else if (pdfViewer.mozRequestFullScreen) {
+                pdfViewer.mozRequestFullScreen();
+            } else if (pdfViewer.webkitRequestFullscreen) {
+                pdfViewer.webkitRequestFullscreen();
+            } else if (pdfViewer.msRequestFullscreen) {
+                pdfViewer.msRequestFullscreen();
+            }
+        });
+
+        // Image Viewer
+        document.getElementById('imageSelect').addEventListener('change', (e) => {
+            const imageContainer = document.getElementById('imageContainer');
+            const selectedImage = document.getElementById('selectedImage');
+            if (e.target.value) {
+                imageContainer.style.display = 'block';
+                selectedImage.src = e.target.value;
+            } else {
+                imageContainer.style.display = 'none';
+            }
+        });
+
+        // Audio Player
+        document.getElementById('audioSelect').addEventListener('change', (e) => {
+            const audioContainer = document.getElementById('audioContainer');
+            const audioPlayer = document.getElementById('audioPlayer');
+            if (e.target.value) {
+                audioContainer.style.display = 'block';
+                audioPlayer.src = e.target.value;
+            } else {
+                audioContainer.style.display = 'none';
+            }
+        });
+
+        // Video Player
+        document.getElementById('videoSelect').addEventListener('change', (e) => {
+            const videoContainer = document.getElementById('videoContainer');
+            const videoPlayer = document.getElementById('videoPlayer');
+            if (e.target.value) {
+                videoContainer.style.display = 'block';
+                videoPlayer.src = e.target.value;
+            } else {
+                videoContainer.style.display = 'none';
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Block right-click
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
