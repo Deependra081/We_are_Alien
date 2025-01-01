@@ -54,11 +54,6 @@
             z-index: 1000;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-        }
 
         .theme-switch {
             background: none;
@@ -99,37 +94,52 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
+            background:unset;
             border-radius: 5px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: unset;
         }
+        img[src="cat.png"] {
+            position: relative;
+            top: 0;
+            width: 50px;
+            height: 50px;
+        }
+        
     </style>
 </head>
 <body>
     <header class="glassmorphism">
-        <div class="logo">Welcome</div>
+        <div><img src="cat.png"></div>
+                    <select class="theme-switch" id="pages" onchange="updateIframe()">
+                        <option value="deep2.html">📖</option>
+                        <option value="deep3.html">Deep 3</option>
+                    </select>
         <button class="theme-switch" id="themeSwitch">🌓</button>
     </header>
     <main>
-        <iframe src="deep2.html" frameborder="0" style="width: 100%; height: 100vh;">
-        </iframe>
+        <iframe id="contentFrame" src="deep2.html" frameborder="0" style="width: 100%; height: 100vh;"></iframe>
     </main>
     <footer class="glassmorphism">
         <ul>
-            <li><a href="1.html"><img src="house.png" class="logo"></a></li>
-            <li><a href="#about"><img src="information.png" class="logo"></a></li>
-            <li><a href="mailto:deependrayad2@gmail.com"><img src="mail.png" class="logo"></a></li>
-            <li><a href="tel:9906772539"><img src="phone.png" class="logo"></a></li>
+            <li><a href="#home"><img src="house.png" class="logo"></a></li>
+            <li><a href="#services"><img src="mail.png" class="logo"></a></li>
+            <li><a href="#contact"><img src="phone.png" class="logo"></a></li>
         </ul>
     </footer>
 
     <script>
+
+function updateIframe() {
+            var select = document.getElementById('pages');
+            var iframe = document.getElementById('contentFrame');
+            iframe.src = select.value;
+        }
         // Theme switching
         const themes = [
-            { primary: '#000000', secondary: '#000000', tertiary: '#000000', quaternary: '#000000' },
+            { primary: '#ee7752', secondary: '#e73c7e', tertiary: '#23a6d5', quaternary: '#23d5ab' },
             { primary: '#3498db', secondary: '#2ecc71', tertiary: '#e74c3c', quaternary: '#f39c12' },
             { primary: '#9b59b6', secondary: '#34495e', tertiary: '#1abc9c', quaternary: '#e67e22' },
             { primary: '#2c3e50', secondary: '#27ae60', tertiary: '#c0392b', quaternary: '#f1c40f' },
@@ -138,7 +148,7 @@
             { primary: '#27ae60', secondary: '#3498db', tertiary: '#e74c3c', quaternary: '#f1c40f' },
             { primary: '#c0392b', secondary: '#2c3e50', tertiary: '#1abc9c', quaternary: '#f39c12' },
             { primary: '#8e44ad', secondary: '#16a085', tertiary: '#2980b9', quaternary: '#e67e22' },
-            { primary: '#d35400', secondary: '#2ecc71', tertiary: '#3498db', quaternary: '#9b59b6' }
+            { primary: '#000000', secondary: '#000000', tertiary: '#000000', quaternary: '#000000' }
         ];
 
         let currentTheme = 0;
