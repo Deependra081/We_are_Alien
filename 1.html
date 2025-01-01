@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cattnip</title>
+    <meta name="theme-color" content="#23a6d5">
+    <style>
+        :root {
+            --glass-color: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+            --glass-radius: 15px;
+            --glass-blur: 10px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .glassmorphism {
+            background: var(--glass-color);
+            backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            border-radius: var(--glass-radius);
+        }
+
+        header {
+            position:sticky;
+            top:10px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .theme-switch {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            position: sticky;
+            bottom: 20px;
+        }
+        ul {
+            display: flex;
+            text-decoration: none;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 0 35px;
+        }
+        .logo{
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--glass-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header class="glassmorphism">
+        <div class="logo">Welcome</div>
+        <button class="theme-switch" id="themeSwitch">🌓</button>
+    </header>
+    <main>
+        <iframe src="deep2.html" frameborder="0" style="width: 100%; height: 100vh;">
+        </iframe>
+    </main>
+    <footer class="glassmorphism">
+        <ul>
+            <li><a href="#home"><img src="house.png" class="logo"></a></li>
+            <li><a href="#about"><img src="information.png" class="logo"></a></li>
+            <li><a href="#services"><img src="mail.png" class="logo"></a></li>
+            <li><a href="#contact"><img src="phone.png" class="logo"></a></li>
+        </ul>
+    </footer>
+
+    <script>
+        // Theme switching
+        const themes = [
+            { primary: '#ee7752', secondary: '#e73c7e', tertiary: '#23a6d5', quaternary: '#23d5ab' },
+            { primary: '#3498db', secondary: '#2ecc71', tertiary: '#e74c3c', quaternary: '#f39c12' },
+            { primary: '#9b59b6', secondary: '#34495e', tertiary: '#1abc9c', quaternary: '#e67e22' },
+            { primary: '#2c3e50', secondary: '#27ae60', tertiary: '#c0392b', quaternary: '#f1c40f' },
+            { primary: '#16a085', secondary: '#2980b9', tertiary: '#8e44ad', quaternary: '#d35400' },
+            { primary: '#2980b9', secondary: '#8e44ad', tertiary: '#16a085', quaternary: '#f39c12' },
+            { primary: '#27ae60', secondary: '#3498db', tertiary: '#e74c3c', quaternary: '#f1c40f' },
+            { primary: '#c0392b', secondary: '#2c3e50', tertiary: '#1abc9c', quaternary: '#f39c12' },
+            { primary: '#8e44ad', secondary: '#16a085', tertiary: '#2980b9', quaternary: '#e67e22' },
+            { primary: '#d35400', secondary: '#2ecc71', tertiary: '#3498db', quaternary: '#9b59b6' }
+        ];
+
+        let currentTheme = 0;
+
+        document.getElementById('themeSwitch').addEventListener('click', () => {
+            currentTheme = (currentTheme + 1) % themes.length;
+            const theme = themes[currentTheme];
+            document.body.style.background = `linear-gradient(-45deg, ${theme.primary}, ${theme.secondary}, ${theme.tertiary}, ${theme.quaternary})`;
+        });
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Block right-click
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
