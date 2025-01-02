@@ -53,6 +53,36 @@
             align-items: center;
             z-index: 1000;
         }
+        @keyframes headerSlideDown {
+            from {
+            transform: translateY(-100%);
+            opacity: 0;
+            }
+            to {
+            transform: translateY(0);
+            opacity: 1;
+            }
+        }
+
+        header {
+            animation: headerSlideDown 1s ease-in-out;
+        }
+
+        @keyframes iconBounce {
+            0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+            }
+            40% {
+            transform: translateY(-10px);
+            }
+            60% {
+            transform: translateY(-5px);
+            }
+        }
+
+        .logo {
+            animation: iconBounce 2s infinite;
+        }
 
 
         .theme-switch {
@@ -68,7 +98,20 @@
             color: white;
             position: sticky;
             bottom: 20px;
+            animation: footerSlideUp 2s ease-in-out;
         }
+
+        @keyframes footerSlideUp {
+            from {
+            transform: translateY(100%);
+            opacity: 0;
+            }
+            to {
+            transform: translateY(0);
+            opacity: 1;
+            }
+        }
+
         ul {
             display: flex;
             text-decoration: none;
@@ -76,12 +119,19 @@
             list-style: none;
             padding: 0;
         }
+
         li {
             margin: 0 35px;
         }
-        .logo{
+
+        .logo {
             width: 30px;
             height: 30px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.2) rotate(10deg);
         }
 
         /* Custom scrollbar */
@@ -115,9 +165,7 @@
         <div><img src="cat.png"></div>
                     <select class="theme-switch" id="pages" onchange="updateIframe()">
                         <option value="deep2.html">📖</option>
-                        <option value="https://deependra081.github.io/hii/">hii</option>
-                        <option value="deep.html">Deep</option>
-                        <option value="deep3.html">Deep3</option>
+                        <option value="deep3.html">Deep 3</option>
                     </select>
         <button class="theme-switch" id="themeSwitch">🌓</button>
     </header>
@@ -126,7 +174,7 @@
     </main>
     <footer class="glassmorphism">
         <ul>
-            <li><a href="1.html"><img src="house.png" class="logo"></a></li>
+            <li><a href="#home"><img src="house.png" class="logo"></a></li>
             <li><a href="mailto:deependrayad2@gmail.com"><img src="mail.png" class="logo"></a></li>
             <li><a href="tel:9906772539"><img src="phone.png" class="logo"></a></li>
             <li><a href="tel:9906772539"><img src="information.png" class="logo"></a></li>
