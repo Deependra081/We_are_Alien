@@ -201,7 +201,7 @@
             </div>
         </div>
 
-        <div class="container glassmorphism">
+       <div class="container glassmorphism">
             <h2>Video Player</h2>
             <select id="videoSelect">
                 <option value="">Select a Video</option>
@@ -210,11 +210,13 @@
             </select>
             <div class="video-container" id="videoContainer">
                 <video id="videoPlayer" style="width: 100%; display: none;">
+                    Your browser does not support the video tag.
                 </video>
                 <div class="custom-video-controls" id="customControls" style="display: none;">
                     <button id="playPauseBtn">Play</button>
                     <input type="range" id="seekBar" value="0" style="flex-grow: 1; margin: 0 10px;">
                     <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                    <button id="fullscreenBtn">Fullscreen</button>
                 </div>
             </div>
         </div>
@@ -325,6 +327,7 @@
                 videoPlayer.src = e.target.value;
                 videoPlayer.style.display = 'block';
                 customControls.style.display = 'flex';
+                videoPlayer.load(); // Load the complete video
             } else {
                 videoContainer.style.display = 'none';
                 videoPlayer.style.display = 'none';
@@ -337,6 +340,7 @@
         const seekBar = document.getElementById('seekBar');
         const currentTime = document.getElementById('currentTime');
         const duration = document.getElementById('duration');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
 
         playPauseBtn.addEventListener('click', () => {
             if (videoPlayer.paused) {
@@ -360,21 +364,23 @@
             videoPlayer.currentTime = time;
         });
 
+        fullscreenBtn.addEventListener('click', () => {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) {
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) {
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) {
+                videoPlayer.msRequestFullscreen();
+            }
+        });
+
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
         }
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
 
         // Block right-click
         document.addEventListener('contextmenu', (e) => e.preventDefault());
